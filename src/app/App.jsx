@@ -1,35 +1,38 @@
 import React, { useState } from "react";
-import CreateClockForm from "../components/clock/CreateClock";
-import Text from "../components/ui/texts/Text";
-import Heading from "../components/ui/texts/Heading";
-import Clock from "../components/clock/Clock";
-import BaseClock from "../components/clock/BaseClock";
+import ClockList from "../components/clock-list";
+import LocalClock from "../components/local-clock";
+import useClock from "../hooks/useClock";
+import { lightFormat, addMinutes } from 'date-fns';
+
 
 const App = () => {
-  const [clocksInfo, setClocksInfo] = useState([]);
+  const { date: localDate, localOffset, localTimeZOne } = useClock();
+	const { date: india, offset, timezone } = useClock('GMT', 5.5 * 60);
+	// const { date: pstzone, offset: offset1, timezone: timezone1 } = useClock('PST');
+	// const { clock: pakistan } = useClock('UTC', 5 * 60);
+	// const { clock: edt } = useClock('EDT');
+	// const { clock: british } = useClock('BST');
+	// const { clock: mst } = useClock('MST');
 
-  const getClockInfo = (values) => {
-    setClocksInfo([].concat(clocksInfo, values));
-  };
+  let date1 = new Date("2022-06-06T15:40:00.000Z");
+  console.log(date1)
+  console.log(date1.getTimezoneOffset())
+  date1 = addMinutes(date1, date1.getTimezoneOffset())
+  console.log(date1)
+  const format = lightFormat(date1, 'hh:mm:ss a')
+  console.log(format);
 
+
+  
   return (
-    <div className="root">
-      <Heading size={"md"}>TrackZone</Heading>
-      <CreateClockForm getClockInfo={getClockInfo} />
-      <div
-        style={{
-          margin: "5rem",
-        }}
-      >
-        <BaseClock />
-        {clocksInfo.length > 0 ? (
-          clocksInfo.map((info, index) => <Clock key={index} state={info} />)
-        ) : (
-          <Text size={'lg'}>
-            No Clocks Infomation available here
-          </Text>
-        )}
-      </div>
+    <div>
+      {localDate !== null && (
+        <LocalClock date={localDate} timezone={localTimeZOne} offset={-localOffset}/>
+      )}
+
+      {india !== null && (
+        <ClockList date={india} timezone={timezone} offset={offset}/>
+      )}
     </div>
   );
 };
