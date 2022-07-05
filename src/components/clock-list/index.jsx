@@ -1,10 +1,16 @@
-import ClockDisplay from "../shared/clock-display";
+import ClockListItem from "../clock-list/clock-list-item";
 
-const ClockList = ({date, offset, timezone}) => {
+const ClockList = ({ clocks, updateClock, deleteClock, localClock }) => {
   return (
     <>
-      <h1>We are Clock List</h1>
-      <ClockDisplay title={"User Clock"} date={date} offset={offset} timezone={timezone} />
+      <h3>Clock List</h3>
+      {clocks.length === 0 ? (
+        <p>There are no others clocks</p>
+      ) :  (
+        clocks.map((clock) => (
+          <ClockListItem key={clock.id} clock={clock} updateClock={updateClock} deleteClock={deleteClock} localClock={localClock}/>
+        ))
+      )}
     </>
   )
 }

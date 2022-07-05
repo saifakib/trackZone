@@ -26,10 +26,10 @@ const ClockForm = ({
   const [formValues, setFormValues] = useState({ ...values });
 
   useEffect(() => {
-    if(TIMEZONE_OFFSET[formValues.timezone]) {
+    if (TIMEZONE_OFFSET[formValues.timezone]) {
       setFormValues((prev) => ({
         ...prev,
-        offset: TIMEZONE_OFFSET[formValues.timezone]
+        offset: TIMEZONE_OFFSET[formValues.timezone],
       }));
     }
   }, [formValues.timezone]);
@@ -48,6 +48,7 @@ const ClockForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     handleClock(formValues);
+    setFormValues({ ...values })
   };
 
   return (
@@ -60,7 +61,7 @@ const ClockForm = ({
           name="title"
           value={formValues.title}
           onChange={handleChange}
-          disabled={title}
+          disabled={!title}
         />
       </div>
       <div>
