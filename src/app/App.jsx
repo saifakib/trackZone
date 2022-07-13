@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ClockList from "../components/clock-list";
 import LocalClock from "../components/local-clock";
 import { nanoid } from "nanoid";
+import useEvents from '../hooks/useEvents';
 
 const LOCAL_CLOCK_INIT = {
   title: "Local Clock",
@@ -38,6 +39,7 @@ const App = () => {
     const updateClocks = clocks.filter((clock) => clock.id !== id);
     setClocks(updateClocks);
   };
+
 
   return (
     <div>

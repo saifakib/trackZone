@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { deepClone, isObjEmpty } from '../utils/object-utils';
 
+/**
+ * 
+ * @param {Object{}} initial
+ * @param {Function()} validate 
+ * @returns 
+ */
 const useForm = ({ initial, validate }) => {
 	const [state, setState] = useState(mapValuesToState(initial));
 
